@@ -1,4 +1,4 @@
-name: base
+name: papez_env
 channels:
   - pytorch
   - nvidia
