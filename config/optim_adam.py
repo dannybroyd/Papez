@@ -1,6 +1,6 @@
-from core.moduledict import ModuleDict, Munch
-import torch.optim
 import torch.optim.lr_scheduler
+from core.moduledict import ModuleDict, Munch
+
 config = Munch(
     optimizer = ModuleDict(
         module = torch.optim.Adam,

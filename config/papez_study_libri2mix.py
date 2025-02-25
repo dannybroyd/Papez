@@ -1,8 +1,8 @@
 import os
+
+from core.model import PapezTransformer, Papez, MemoryTransformerEncoderLayer_MEMABSPOS_SINGLESHOT_AdaLN_NormTogether
 from core.moduledict import ModuleDict2 as ModuleDict
 from core.moduledict import Munch, import_config_from_path
-from core.model import PapezTransformer, Papez, MemoryTransformerEncoderLayer_MEMABSPOS_SINGLESHOT_AdaLN_NormTogether
-import torch.nn as nn
 
 num_speakers = 2
 sample_rate = 8000

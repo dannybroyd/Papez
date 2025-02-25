@@ -1,12 +1,11 @@
-from config.papez_study_libri2mix import config 
-import pytorch_lightning as pl
+import argparse
+import os
 
-import torch
+import pytorch_lightning as pl
 from pytorch_lightning import loggers as pl_loggers
 
-import argparse
 import main
-import os
+from config.papez_study_libri2mix import config
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

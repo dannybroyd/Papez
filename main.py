@@ -1,16 +1,9 @@
 import pytorch_lightning as pl
-
 import torch
-from torch import optim, nn
-from torchmetrics import PermutationInvariantTraining
 import torchmetrics.functional
-from torchmetrics.audio import pesq
 from torch.utils.data import DataLoader, random_split
-
-from config.papez_study_libri2mix import config as config2
-
-import core.visualize as vis
-import random
+from torchmetrics import PermutationInvariantTraining
+from torchmetrics.audio import pesq
 
 
 class LitModule(pl.LightningModule): # define the LightningModule
