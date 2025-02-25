@@ -25,6 +25,7 @@ config.update(Munch(
         module = Papez,
         submodules = Munch(
             intra_model= ModuleDict(
+                # AWM Transformer
                 module = PapezTransformer,
                 submodules = Munch(
                     encoder_layer = ModuleDict(

@@ -128,34 +128,44 @@ class MemoryTransformerEncoderLayer_MEMABSPOS_SINGLESHOT_AdaLN_NormTogether(nn.M
         else:
             B,L,N = seq.shape
             seq_mem = torch.cat((seq, mem), dim = 1) # B, L+M, N
+            # Self-attention: includes chunking, concat, multi-head attention, split, average and overlap from fig 1
             seq_out, mem_out = self._sa_block(seq,mem, src_mask, src_key_padding_mask)
+            # Add + Layer Norm (for gradients)
             seq_mem =  self.norm1(seq_mem + torch.cat((seq_out, mem_out), dim = 1), depth) # B, L+M, N
+            # Feed Forward Neural Network
             seq_mem_out = self._ff_block(seq_mem)  # B, L+M, N
+            # Add + Layer Norm (for gradients)
             seq_mem = self.norm2(seq_mem + seq_mem_out, depth)
+            # Split
             seq, mem = seq_mem[:, :L, :],seq_mem[:, L:, :] # (B, L, N), (B, M, N
 
         return seq, mem
 
     def _sa_block(self, x: Tensor, mem:Tensor, # x: B, L, N, mem: B, M, N
                   attn_mask: Optional[Tensor], key_padding_mask: Optional[Tensor], info = None) -> Tensor:
-        
+        # Create S Overlapping chunks each of size K
         seq, gap = self._overlap_chunk(x, self.chunk_size) # B, S, K, N        
         B, S, K, N = seq.shape
-        
+        # Treat each chunk as separate sample
         seq = torch.reshape(seq, (B * S, K, N)) # B*S, K, N
+        # Duplicate memory tokens for each chunk
         mem = mem.repeat((S,1,1)) # B*S, M, N
+        # Concat memory token to each chunk and include positional encoding.
         memseq = torch.cat((mem,seq), dim = 1) + self.position_signal  # B*S, M+K, N
+        # Activate self attention on each chunk
         memseq = self.self_attn(memseq, memseq, memseq,
                            attn_mask=attn_mask,
                            key_padding_mask=key_padding_mask,
-                           need_weights=False)[0] # B*S, K, N
+                           need_weights=False)[0] # B*S, M+K, N
+        # Take Last K from attention (seq data)
         seq = torch.reshape(memseq[:,-K:,:], (B,S,K,N)) # B,S,K,N
+        # Take First M (the rest) from attention (mem data)
         mem = torch.reshape(memseq[:,:-K,:], (B, S, -1, N)) # B,S,M,N
-        
+        # Average over memory for entire sequence (over all chunks!)
         mem_out = torch.mean(mem, dim = 1) # B, M, N
-        
+        # Re-assemble the sequence from chunks
         seq = self._overlap_add(seq,gap) # B, L, N
-        
+        # Dropout is to counter over-fitting
         return self.dropout1(seq), mem_out
 
     def _ff_block(self, x: Tensor) -> Tensor:
@@ -170,17 +180,24 @@ class MemoryTransformerEncoderLayer_MEMABSPOS_SINGLESHOT_AdaLN_NormTogether(nn.M
         return x, gap
 
     def _overlap_chunk(self, input,K): # B, L, N
+        # Create overlapping chunks
         B, L, N = input.shape
         P = K // 2
+        # Padding to align seq with overlap
         input, gap = self._padding(input, K)
+
+        # We don't know how many chunks we will get, -1 will translate to automatically calculate this value
+        # Overlap the chunks
         input1 = torch.reshape(input[:, :-P, :], (B, -1, K, N))
         input2 = torch.reshape(input[:, P:, :], (B, -1, K, N))
         input = torch.cat([input1, input2], dim=2)
+        # here, S is how many chunks we get - each of size K
         input = torch.reshape(input, (B, -1, K, N)) # B, S, K, N
         #input = torch.permute(input, (0, 2, 3, 1)) # B, S, K, N
         return input, gap
 
     def _overlap_add(self, input, gap):
+        # Used after chunking - reassemble the sequence from chunked input
         B, S, K, N = input.shape
         P = K // 2
         #input = torch.reshape(torch.permute(input, (0, 3, 1, 2)), (B, N, -1, K * 2))

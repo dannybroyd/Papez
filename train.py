@@ -37,13 +37,13 @@ if __name__ == "__main__":
     # train the model
     trainer = pl.Trainer(precision=16, 
                          limit_val_batches=200, 
-                        max_epochs = 1000,
-                        default_root_dir=config["save_directory"],
-                        accelerator="gpu", devices = args.gpu,
-                        logger=[tb_logger],
-                        gradient_clip_val=1.0,
-                        num_sanity_val_steps=2,
-                        resume_from_checkpoint=ckpt_path,
-                        )
+                         max_epochs = 1000,
+                         default_root_dir=config["save_directory"],
+                         accelerator="gpu", devices = args.gpu,
+                         logger=[tb_logger],
+                         gradient_clip_val=1.0,
+                         num_sanity_val_steps=2,
+                         resume_from_checkpoint=ckpt_path,
+                         )
     
     trainer.fit(model=boilerplate)

@@ -4,10 +4,9 @@ import torch.nn.functional as F
 from torch import Tensor
 from core.model.encoderlayer import MLP2Layer_Osmosis
 from core.model.utils import _gen_positional_encoding
-
+# This model only takes care of token pruning and using the AWM transformer as a blackbox.
 class Model(nn.Module):
     def __init__(self, encoder_layer, num_layers:int, hidden_size:int, threshold:float = 0.9, max_seq_len:int=10000, norm = None):
-    
         super().__init__()
         
         timing_signal = torch.empty(1, num_layers + 1, hidden_size)
