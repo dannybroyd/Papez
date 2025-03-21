@@ -1,4 +1,4 @@
-name: papez_env
+name: audio_env
 channels:
   - pytorch
   - nvidia
@@ -132,7 +132,7 @@ dependencies:
   - wheel=0.37.1=pyhd3eb1b0_0
   - xz=5.2.5=h7b6447c_0
   - yaml=0.2.5=h7b6447c_0
-  - zlib=1.2.12=h7f8727e_1
+  - zlib=1.2.12=h7f8727e_2
   - zstd=1.5.2=ha4553b6_0
   - pip:
     - absl-py==1.2.0

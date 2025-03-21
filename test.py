@@ -1,11 +1,12 @@
-import argparse
-
-import pytorch_lightning as pl
-from pytorch_lightning import loggers as pl_loggers
-
-import main
-import os
 from config.papez_study_libri2mix import config
+
+import torch
+from torch.utils.data import DataLoader, random_split
+from pytorch_lightning import loggers as pl_loggers
+import pytorch_lightning as pl
+
+import argparse
+import main, os
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -23,20 +24,24 @@ if __name__ == "__main__":
 
     if "ckpt_path" in config:
         if os.path.exists(config.ckpt_path):
-            boilerplate = boilerplate.load_from_checkpoint(config.ckpt_path)
+            ckpt_path = config.ckpt_path
         else:
             print("** Given checkpoint path does not exist!")
+            ckpt_path = None
     else:
         print("** No checkpoint path given!")
+        ckpt_path = None
+    
+
     
     # Model Sanity Check
     #sample = boilerplate.model(next(iter(test_loader))[1])
 
     # Test the model
-    trainer = pl.Trainer(precision=16,limit_test_batches=7,
+    trainer = pl.Trainer(precision=16,
                         default_root_dir=config["save_directory"],
-                        accelerator="gpu", gpus = args.gpu,
+                        accelerator="gpu", devices = args.gpu,
                         logger=[tb_logger])
 
-    trainer.test(model= boilerplate, #bp2,
-                )
+    trainer.test(model= boilerplate, ckpt_path=ckpt_path) 
+                

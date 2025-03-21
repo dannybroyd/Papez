@@ -1,11 +1,12 @@
-import argparse
-import os
-
+from config.papez_study_libri2mix import config 
 import pytorch_lightning as pl
+
+import torch
 from pytorch_lightning import loggers as pl_loggers
 
+import argparse
 import main
-from config.papez_study_libri2mix import config
+import os
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -36,13 +37,14 @@ if __name__ == "__main__":
     # train the model
     trainer = pl.Trainer(precision=16, 
                          limit_val_batches=200, 
-                         max_epochs = 1000,
+                         max_steps=config["total_steps"],
                          default_root_dir=config["save_directory"],
                          accelerator="gpu", devices = args.gpu,
                          logger=[tb_logger],
                          gradient_clip_val=1.0,
                          num_sanity_val_steps=2,
-                         resume_from_checkpoint=ckpt_path,
+                         enable_progress_bar=False,
+                         log_every_n_steps=200           #change to 500?!
                          )
     
-    trainer.fit(model=boilerplate)
+    trainer.fit(model=boilerplate, ckpt_path=ckpt_path)

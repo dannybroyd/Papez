@@ -1,10 +1,15 @@
 import pytorch_lightning as pl
-import torch
-import torchmetrics.functional
-from torch.utils.data import DataLoader, random_split
-from torchmetrics import PermutationInvariantTraining
-from torchmetrics.audio import pesq
 
+import torch
+from torch import optim, nn
+from torchmetrics import PermutationInvariantTraining
+import torchmetrics.functional
+from torchmetrics.audio import pesq
+from torch.utils.data import DataLoader, random_split
+from pytorch_lightning import seed_everything
+from config.papez_study_libri2mix import config as config2
+
+import random
 
 class LitModule(pl.LightningModule): # define the LightningModule
     def __init__(self, config, seed = None):
@@ -12,9 +17,9 @@ class LitModule(pl.LightningModule): # define the LightningModule
         self.save_hyperparameters(config, seed)
         
         if isinstance(seed, int):
-            self.seed = pl.utilities.seed.seed_everything(seed)
+            self.seed = seed_everything(seed)
         else:
-            self.seed = pl.utilities.seed.seed_everything()
+            self.seed = seed_everything()
         print("LitModule seed:", self.seed)
             
         self.config = config
@@ -25,7 +30,10 @@ class LitModule(pl.LightningModule): # define the LightningModule
             print(v)
         
         
-
+    def forward(self, x):
+        """This is the forward pass, called during inference"""
+        return self.model(x)  # Passing input x through the model
+    
     def training_step(self, batch, batch_idx):
         #print(batch)
         _, x, y = batch
@@ -88,23 +96,23 @@ class LitModule(pl.LightningModule): # define the LightningModule
         self.log("loss", loss, on_step=True, on_epoch=True)
         self.log("sisdr", si_sdr, on_step=True, on_epoch=True)
         self.log("sisnr", si_snr, on_step=True, on_epoch=True)
-        
+
         try:
             sdr = self.sdr_pit(y, pred)
-            snr = self.snr_pit(y, pred)
+            # # Compute SISNR and SDR for the mixture input
+            x_expanded = x.expand(-1, 2, -1)  # Expand x to match y's shape
+            si_snr_mix = self.si_snr_pit(y, x_expanded)
+            sdr_mix = self.sdr_pit(y, x_expanded)
+
+            # Compute the improvement metrics
+            si_snri = si_snr - si_snr_mix
+            sdri = sdr - sdr_mix
+
             self.log("sdr", sdr, on_step=True, on_epoch=True)
-            self.log("snr", snr, on_step=True, on_epoch=True)
+            self.log("sisnri", si_snri, on_step=True, on_epoch=True)
+            self.log("sdri", sdri, on_step=True, on_epoch=True)
         except:
-            print("Failed to plot SDR and SNR")
-        
-        try:
-            nb_pesq = self.nb_pesq(y,pred)
-            self.log("nb_pesq", nb_pesq, on_step=False, on_epoch=True)
-            if self.wb_pesq is not None:
-                wb_pesq = self.wb_pesq(y,pred)
-                self.log("wb_pesq", wb_pesq, on_step=False, on_epoch=True)
-        except:
-            print("Failed to plot PESQ")
+            print("Failed to plot SDR, SNSRI and SDRI")
         
 
     def configure_optimizers(self):
@@ -154,10 +162,11 @@ class LitModule(pl.LightningModule): # define the LightningModule
         if stage in ['test', 'predict'] or stage is None:
             self.test_dataset = self.config.test_dataset()
         return
-        
+
+
     def train_dataloader(self):
-        return DataLoader(self.train_dataset, batch_size=1, shuffle=True, num_workers=1)
+        return DataLoader(self.train_dataset, batch_size=1, shuffle=True, num_workers=16)
     def val_dataloader(self):
-        return DataLoader(self.valid_dataset, batch_size=1, shuffle=False, num_workers=1)
+        return DataLoader(self.valid_dataset, batch_size=1, shuffle=False, num_workers=16)
     def test_dataloader(self):
-        return DataLoader(self.test_dataset, batch_size=1, shuffle=False, num_workers=1)
+        return DataLoader(self.test_dataset, batch_size=1, shuffle=False, num_workers=16)

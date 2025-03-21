@@ -1,0 +1,23 @@
+#in order to see the progress you need to:
+1. run on your local computer: 
+    ssh -L 6006:localhost:6006 your_username@your_server_ip
+    in my case:
+    ssh -L 6006:localhost:6006 doronaloni@c-001.cs.tau.ac.il
+2. run on the server in bash conda env:
+    tensorboard --logdir=tb_logs/ --port=6006 --bind_all
+3. enter http://localhost:6006 to see the results
+
+
+
+
+# Activate Conda
+source /home/joberant/NLP_2425a/doronaloni/anaconda3/etc/profile.d/conda.sh
+conda activate audio_env
+
+#how to run the job on slurm:
+create job.slurm file
+run in terminal : sbatch job.slurm
+
+
+# Run inference example:
+python inference_test.py --input_file data/output/Libri2Mix/wav8k/max/test/mix_both/61-70968-0000_8455-210777-0012.wav --output_file inference_examples/example1.wav --gpu 0

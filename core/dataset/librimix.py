@@ -87,28 +87,4 @@ class LibriMix(Dataset):
         """
         #info, mixed, srcs =  
         return self._load_sample(self.files[key])
-    
-
-if __name__ == "__main__":
-    from tqdm import tqdm
-    import soundfile as sf
-    from torch.utils.data import DataLoader, random_split
-    
-    ds = LibriMix(
-        root = "/data1/ohsai/LibriMix/",
-        subset = "train-360",
-        num_speakers = 3,
-        sample_rate = 8000,
-        task = 'sep_clean',
-    )
-    generator = DataLoader(ds, batch_size=1, shuffle=True, num_workers=1)
-    _, mix, [s1,s2, s3] = next(iter(generator))
-    print(mix.shape)
-    print(s1.shape)
-    print(s2.shape)
-    print(s3.shape)
-    sr = 8000
-    sf.write("mix.wav", mix[0,0,:].numpy(), sr)
-    sf.write("s1.wav", s1[0,0,:].numpy(), sr)
-    sf.write("s2.wav", s2[0,0,:].numpy(), sr)
-    sf.write("s3.wav", s3[0,0,:].numpy(), sr)
+ 

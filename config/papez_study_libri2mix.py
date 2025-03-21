@@ -1,8 +1,8 @@
 import os
-
-from core.model import PapezTransformer, Papez, MemoryTransformerEncoderLayer_MEMABSPOS_SINGLESHOT_AdaLN_NormTogether
 from core.moduledict import ModuleDict2 as ModuleDict
 from core.moduledict import Munch, import_config_from_path
+from core.model import PapezTransformer, Papez, MemoryTransformerEncoderLayer_MEMABSPOS_SINGLESHOT_AdaLN_NormTogether
+import torch.nn as nn
 
 num_speakers = 2
 sample_rate = 8000
@@ -21,6 +21,7 @@ config.update(Munch(
     checkpoint_step = 4000,
     evaluation_step = 100,
     total_steps = 10_000_000,
+    ckpt_path = "tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt",
     model = ModuleDict(
         module = Papez,
         submodules = Munch(

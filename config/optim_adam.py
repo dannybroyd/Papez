@@ -1,6 +1,6 @@
-import torch.optim.lr_scheduler
 from core.moduledict import ModuleDict, Munch
-
+import torch.optim
+import torch.optim.lr_scheduler
 config = Munch(
     optimizer = ModuleDict(
         module = torch.optim.Adam,
@@ -12,6 +12,6 @@ config = Munch(
                 total_iters=100, 
             )
         ],
-        lr = 1e-4,
+        lr = 1e-4,  #learning rate
     ),
 )

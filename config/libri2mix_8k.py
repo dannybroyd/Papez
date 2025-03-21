@@ -1,6 +1,6 @@
 from core.moduledict import ModuleDict, Munch
 from core.dataset import LibriMix
-rootdir = "/data1/ohsai/LibriMix/"
+rootdir = "data/output/"
 num_speakers = 2
 sample_rate = 8000
 config = Munch(
