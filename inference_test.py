@@ -1,18 +1,23 @@
 import torch
 import torchaudio
 import os
-from main import LitModule # Import your LightningModule
-from config.papez_study_libri2mix import config # Import config
+import argparse
+from main import LitModule  # Import your LightningModule
+from config.papez_study_libri2mix import config  # Import config
+
+# ======= PARSE ARGUMENTS =======
+parser = argparse.ArgumentParser(description="Run batch inference for speech separation.")
+parser.add_argument("input_folder", type=str, help="Path to the folder containing input mixtures")
+parser.add_argument("checkpoint_path", type=str, help="Path to the model checkpoint")
+args = parser.parse_args()
 
 # ======= CONFIGURE PATHS =======
-checkpoint_path = "tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt" # Update this!
-input_folder = "/home/yandex/APDL2425a/group_4/Papez/inference_examples/input_samples" # Folder containing input mixtures
-output_folder = "inference_examples/separated_speakers" # Folder to save separated outputs
+output_folder = "inference_examples/separated_speakers"  # Folder to save separated outputs
 os.makedirs(output_folder, exist_ok=True)
 
 # ======= LOAD THE TRAINED MODEL =======
-print(f"Loading model from {checkpoint_path}...")
-model = LitModule.load_from_checkpoint(checkpoint_path, config=config)
+print(f"Loading model from {args.checkpoint_path}...")
+model = LitModule.load_from_checkpoint(args.checkpoint_path, config=config)
 model.eval()
 model.freeze()
 
@@ -25,16 +30,16 @@ def normalize_audio(audio):
     return audio
 
 # ======= PROCESS ALL AUDIO FILES IN THE FOLDER =======
-audio_files = [f for f in os.listdir(input_folder) if f.endswith('.wav')]
+audio_files = [f for f in os.listdir(args.input_folder) if f.endswith('.wav')]
 
 if not audio_files:
-    print(f"No audio files found in {input_folder}.")
+    print(f"No audio files found in {args.input_folder}.")
     exit()
 
 print(f"Found {len(audio_files)} audio files. Processing...")
 
 for file_name in audio_files:
-    file_path = os.path.join(input_folder, file_name)
+    file_path = os.path.join(args.input_folder, file_name)
     print(f"\nProcessing: {file_name}")
 
     # Load the mixture audio file
@@ -56,7 +61,7 @@ for file_name in audio_files:
     mixture = mixture.to(device)
 
     with torch.no_grad():
-        separated_sources = model.model(mixture) # Shape: (1, num_speakers, time_steps)
+        separated_sources = model.model(mixture)  # Shape: (1, num_speakers, time_steps)
 
     # Create sub-folder for this file
     file_output_folder = os.path.join(output_folder, os.path.splitext(file_name)[0])

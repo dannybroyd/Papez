@@ -28,8 +28,13 @@ $ conda env create -f papez_env.yml
 $ conda activate papez_env
 ```
 
-3. Train a Papez model with (If you only have 1 gpu, ignore the flag):
+3. Train a Papez model with (If you only have 1 gpu, don't add the additional argument):
 
 ```
 $ python train.py --gpu $GPU_NUMBER
+```
+
+4. Run Inference on audio examples:
+```
+$ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
 ```
