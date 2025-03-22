@@ -15,7 +15,7 @@
 **Note:** *This implementation is only supported on Linux environments. Please ensure you are running this on a compatible Linux-based operating system for best results.
 If you have any audio examples you wish to run inference on, please make sure that they are sampled in 8kHz.*
 
-### Data
+## Data
 
 **Note:** *Since we use the Libri2Mix dataset, you need to run a script to download and process the data before training.*
 
@@ -37,7 +37,7 @@ $ ./LibriMix/generate_librimix.sh
 ```
 
 
-### Training & Inference usage
+## Training & Inference usage
 
 1. With Conda installed, run(not needed if you already created the environment):
 
@@ -62,7 +62,7 @@ $ python train.py --gpu $GPU_NUMBER
 $ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
 ```
 
-### Only Inference usage (with our trained model)
+## Only Inference usage (with our trained model)
 
 1. With Conda installed, run(not needed if you already created the environment):
 
