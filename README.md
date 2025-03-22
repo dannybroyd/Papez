@@ -1,4 +1,4 @@
-## Official Implementation of `Papez: Resource-Efficient Speech Separation with Auditory Working Memory` (ICASSP 2023)
+## An implementation of `Papez: Resource-Efficient Speech Separation with Auditory Working Memory` (ICASSP 2023)
 
 > [Hyunseok Oh](http://www.aistudy.co.kr/ohs/), [Juheon Yi](https://juheonyi.github.io/), [Youngki Lee](http://youngkilee.blogspot.com/)<br>
 > In ICASSP 2023. <br>
@@ -16,36 +16,20 @@
 
 ### Usage
 
-1. Install the dependencies through 
+1. With Conda installed, run:
 
 ```
-$ pip install -r requirements_pip.txt
+$ conda env create -f papez_env.yml
 ```
 
-2. Select desired configuration from the config directory and import them in `main.py`, `train.py` and 'test.py'.
+2. Activate the environment:
 
-3. Train a Papez model with:
+```
+$ conda activate papez_env
+```
+
+3. Train a Papez model with (If you only have 1 gpu, ignore the flag):
 
 ```
 $ python train.py --gpu $GPU_NUMBER
 ```
-
-4. Test the model by setting the `ckpt_path` property of the config with the trained checkpoint path, and use the command
-
-```bash
-$ python test.py --gpu $GPU_NUMBER
-```
-
-## Citation
-Please cite our paper if you find our work useful: 
-```
-@inproceedings{oh2023papez,
-  title={Papez: Resource-Efficient Speech Separation with Auditory Working Memory},
-  author={Oh, Hyunseok and Yi, Juheon and Lee, Youngki},
-  booktitle={ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
-  pages={1--5},
-  year={2023},
-  organization={IEEE}
-}
-```
-
