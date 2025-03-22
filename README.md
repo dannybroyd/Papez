@@ -10,7 +10,9 @@
 
 > **Abstract:** *Transformer-based models recently reached state-of-the-art single-channel speech separation accuracy; However, their extreme computational load makes it difficult to deploy them in resource-constrained mobile or IoT devices. We thus present Papez, a lightweight and computation-efficient single-channel speech separation model. Papez is based on three key techniques. We first replace the inter-chunk Transformer with small-sized auditory working memory. Second, we adaptively prune the input tokens that do not need further processing. Finally, we reduce the number of parameters through the recurrent transformer. Our extensive evaluation shows that Papez achieves the best resource and accuracy tradeoffs with a large margin.*
 
-### Usage
+If you have any audio examples you wish to run inference on, please make sure that they are sampled in 8kHz.
+
+### Training & Inference usage
 
 1. With Conda installed, run:
 
@@ -33,4 +35,23 @@ $ python train.py --gpu $GPU_NUMBER
 4. Run Inference on audio examples:
 ```
 $ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
+```
+
+### Only Inference usage (with our trained model)
+
+1. With Conda installed, run:
+
+```
+$ conda env create -f papez_env.yml
+```
+
+2. Activate the environment:
+
+```
+$ conda activate papez_env
+```
+
+3. Run Inference on audio examples:
+```
+$ python inference_test.py /path/to/input_folder tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt
 ```
