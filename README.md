@@ -94,7 +94,7 @@ $ conda env create -f papez_env.yml
 $ conda activate papez_env
 ```
 
-3. Run Inference on audio examples (you should have audio files exist in the input_folder) - you can also skip this step:
+3. Run Inference on audio examples (you should have audio files in the input_folder before running):
 ```
 $ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
 ```
