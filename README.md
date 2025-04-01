@@ -12,8 +12,7 @@
 
 ## Disclaimer
 
-**Note:** *This implementation is only supported on Linux environments. Please ensure you are running this on a compatible Linux-based operating system for best results.
-If you have any audio examples you wish to run inference on, please make sure that they are sampled in 8kHz.*
+**Note:** *This implementation is only supported on Linux environments. Please ensure you are running this on a compatible Linux-based operating system.*
 
 ## Data
 
