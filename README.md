@@ -31,14 +31,18 @@ $ conda activate papez_env
 ## Data
 
 **Note:** *Since we use the Libri2Mix dataset, you need to run a script to download and process the data before training.*
+
 Inside the conda environment,
+
 Run Data generation script:
 ```
 $ ./LibriMix/generate_librimix.sh
 ```
 
 ## Training usage
+
 Inside the conda environment,
+
 Train a Papez model with (If you only have 1 gpu, don't add the additional argument - otherwise, specify the gpu number you want to train on):
 
 ```
@@ -46,14 +50,18 @@ $ python train.py --gpu $GPU_NUMBER
 ```
 
 ## Evaluation usage
+
 Inside the conda environment,
+
 Run Evaluation on trained model:
 ```
 $ python test.py
 ```
 
 ## Inference usage
+
 Inside the conda environment,
+
 Run Inference on audio examples from the dataset (some are train and some are eval):
 ```
 $ python inference_test.py inference_examples\input_samples tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt
