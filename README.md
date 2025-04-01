@@ -37,7 +37,7 @@ $ ./LibriMix/generate_librimix.sh
 ```
 
 
-## Training & Inference usage
+## Training usage
 
 1. With Conda installed, run(not needed if you already created the environment):
 
@@ -57,12 +57,9 @@ $ conda activate papez_env
 $ python train.py --gpu $GPU_NUMBER
 ```
 
-4. Run Inference on audio examples:
-```
-$ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
-```
+## Evaluation usage
 
-## Only Inference usage (with our trained model)
+**Note:** *The path to our trained model: tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt*
 
 1. With Conda installed, run(not needed if you already created the environment):
 
@@ -76,7 +73,28 @@ $ conda env create -f papez_env.yml
 $ conda activate papez_env
 ```
 
-3. Run Inference on audio examples:
+3. Run Evaluation on trained model:
 ```
-$ python inference_test.py /path/to/input_folder tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt
+$ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
+```
+
+## Inference usage
+
+**Note:** *The path to our trained model: tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt*
+
+1. With Conda installed, run(not needed if you already created the environment):
+
+```
+$ conda env create -f papez_env.yml
+```
+
+2. Activate the environment:
+
+```
+$ conda activate papez_env
+```
+
+3. Run Inference on audio examples (you should have audio files exist in the input_folder) - you can also skip this step:
+```
+$ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
 ```
