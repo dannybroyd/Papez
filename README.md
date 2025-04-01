@@ -59,8 +59,6 @@ $ python train.py --gpu $GPU_NUMBER
 
 ## Evaluation usage
 
-**Note:** *The path to our trained model: tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt*
-
 1. With Conda installed, run(not needed if you already created the environment):
 
 ```
@@ -75,7 +73,7 @@ $ conda activate papez_env
 
 3. Run Evaluation on trained model:
 ```
-$ python inference_test.py /path/to/input_folder /path/to/checkpoint.ckpt
+$ python test.py
 ```
 
 ## Inference usage
