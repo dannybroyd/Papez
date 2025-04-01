@@ -14,6 +14,20 @@
 
 **Note:** *This implementation is only supported on Linux environments. Please ensure you are running this on a compatible Linux-based operating system.*
 
+## Environment setup - Do this before running any other script!
+
+1. With Conda installed, run(not needed if you already created the environment):
+
+```
+$ conda env create -f papez_env.yml
+```
+
+2. Activate the environment:
+
+```
+$ conda activate papez_env
+```
+
 ## Data
 
 **Note:** *Since we use the Libri2Mix dataset, you need to run a script to download and process the data before training.*
@@ -33,20 +47,6 @@ $ conda activate papez_env
 3. Run Data generation script:
 ```
 $ ./LibriMix/generate_librimix.sh
-```
-
-## Environment setup - Do this before running any other script!
-
-1. With Conda installed, run(not needed if you already created the environment):
-
-```
-$ conda env create -f papez_env.yml
-```
-
-2. Activate the environment:
-
-```
-$ conda activate papez_env
 ```
 
 ## Training usage
