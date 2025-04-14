@@ -31,7 +31,7 @@ $ conda activate papez_env
 3. download additional packages (if you have enough space you can leave out the --no-cache-dir)
 
 ```
-pip install --no-cache-dir -r environment_test_pip.txt
+pip install --no-cache-dir -r requirements.txt
 ```
 
 ## Data
