@@ -28,6 +28,12 @@ $ conda env create -f papez_env.yml
 $ conda activate papez_env
 ```
 
+3. download additional packages (if you have enough space you can leave out the --no-cache-dir)
+
+```
+pip install --no-cache-dir -r environment_test_pip.txt
+```
+
 ## Data
 
 **Note:** *Since we use the Libri2Mix dataset, you need to run a script to download and process the data before training.*
