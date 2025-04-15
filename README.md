@@ -36,7 +36,7 @@ pip install --no-cache-dir -r requirements.txt
 
 ## Data
 
-**Note:** *Since we use the Libri2Mix dataset, you need to run a script to download and process the data before training.*
+**Note:** *Since we use the Libri2Mix dataset, you need to run a script to download and process the data before training. THIS PROCESS TAKES A WHILE - a few hours...*
 
 Inside the conda environment,
 
@@ -70,5 +70,5 @@ Inside the conda environment,
 
 Run Inference on audio examples from the dataset (some are train and some are eval):
 ```
-$ python inference_test.py inference_examples\input_samples tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt
+$ python inference_test.py inference_examples/input_samples tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt
 ```
