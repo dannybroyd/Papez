@@ -92,10 +92,8 @@ Replace the existing environment activation line with your own Conda environment
 source YOUR_CONDA_SOURCE
 conda activate YOUR_ENV_NAME
 ```
-
-```
 Uncomment the relevant line (python train.py for training or python test.py for evaluation)
-```
+
 Submit your job with:
 ```
 sbatch job.slurm
