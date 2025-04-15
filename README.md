@@ -53,6 +53,8 @@ $ ./LibriMix/generate_librimix.sh
 
 ## Training usage
 
+**Note:** *Training requires a GPU with enough RAM to handle training. in our case - a titan rtx isn't enough, but a RTX 3090 works*
+
 Inside the conda environment,
 
 Train a Papez model with (If you only have 1 gpu, don't add the additional argument - otherwise, specify the gpu number you want to train on):
