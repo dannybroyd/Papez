@@ -53,7 +53,7 @@ $ ./LibriMix/generate_librimix.sh
 
 ## Training usage
 
-**Note:** *Training requires a GPU with enough RAM to handle training. in our case - a titan rtx isn't enough, but a RTX 3090 works*
+**Note:** *Training requires a GPU with enough RAM to handle training. In our case - a titan rtx wasn't enough, but RTX 3090 worked*
 
 Inside the conda environment,
 
