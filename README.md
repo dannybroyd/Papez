@@ -14,6 +14,12 @@
 
 **Note:** *This implementation is only supported on Linux environments. Please ensure you are running this on a compatible Linux-based operating system.*
 
+## Audio samples 
+train and validation audio from the dataset can be found under "dataset_examples" folder.
+ 
+inference_examples can be found under "inference_examples" folder.
+
+
 ## Environment setup - Do this before running any other script!
 
 1. With Conda installed, run(not needed if you already created the environment):
@@ -71,4 +77,25 @@ Inside the conda environment,
 Run Inference on audio examples from the dataset (some are train and some are eval):
 ```
 $ python inference_test.py inference_examples/input_samples tb_logs/lightning_logs/version_13/checkpoints/epoch=99-step=4826000.ckpt
+```
+
+## Running with SLURM
+
+To train or evaluate the model using SLURM, a job.slurm file is provided. Modify this file according to your own Conda environment setup:
+
+```
+Open job.slurm.
+```
+
+```
+Replace the existing environment activation line with your own Conda environment:
+conda activate YOUR_ENV_NAME
+```
+
+```
+Uncomment the relevant line (python train.py for training or python test.py for evaluation)
+```
+Submit your job with:
+```
+sbatch job.slurm
 ```

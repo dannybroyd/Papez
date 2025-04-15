@@ -19,6 +19,8 @@ conda activate audio_env
 python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.device_count())"
 python -c "import torch; torch.cuda.is_available(); print('CUDA check passed')"
 
-# Run training or testing script
+# For training:
 # python train.py
-python test.py
+
+# For evaluation:
+# python test.py
