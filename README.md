@@ -83,18 +83,17 @@ $ python inference_test.py inference_examples/input_samples tb_logs/lightning_lo
 
 To train or evaluate the model using SLURM, a job.slurm file is provided. Modify this file according to your own Conda environment setup:
 
-```
-Open job.slurm.
-```
+1. Open job.slurm.
 
-Replace the existing environment activation line with your own Conda environment:
+
+2. Replace the existing environment activation line with your own Conda environment:
 ```
 source YOUR_CONDA_SOURCE
 conda activate YOUR_ENV_NAME
 ```
-Uncomment the relevant line (python train.py for training or python test.py for evaluation)
+3. Uncomment the relevant line (python train.py for training or python test.py for evaluation)
 
-Submit your job with:
+4. Submit your job with:
 ```
 sbatch job.slurm
 ```
