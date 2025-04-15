@@ -87,8 +87,9 @@ To train or evaluate the model using SLURM, a job.slurm file is provided. Modify
 Open job.slurm.
 ```
 
-```
 Replace the existing environment activation line with your own Conda environment:
+```
+source YOUR_CONDA_SOURCE
 conda activate YOUR_ENV_NAME
 ```
 
