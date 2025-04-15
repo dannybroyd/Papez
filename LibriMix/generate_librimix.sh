@@ -71,13 +71,12 @@ python_path=python
 $python_path scripts/augment_train_noise.py --wham_dir $wham_dir
 
 
-metadata_dir=metadata/Libri2Mix
-$python_path scripts/create_librimix_from_metadata.py --librispeech_dir data/LibriSpeech/ \
+
+$python_path LibriMix/scripts/create_librimix_from_metadata.py --librispeech_dir data/LibriSpeech/ \
 	--wham_dir data/wham_noise/ \
-	--metadata_dir generate_data/LibriMix/metadata/ \
+	--metadata_dir LibriMix/metadata/Libri2Mix \
 	--librimix_outdir data/output/ \
 	--n_src 2 \
 	--freqs 8k \
 	--modes min max \
 	--types mix_clean mix_both mix_single
-
