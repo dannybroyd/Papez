@@ -19,6 +19,21 @@ train and validation audio from the dataset can be found under "dataset_examples
  
 inference_examples can be found under "inference_examples" folder.
 
+Combined audio recording:
+
+https://github.com/user-attachments/assets/80cc1a56-1930-424f-b0c4-ea339b6ffee7
+
+speaker 1:
+
+https://github.com/user-attachments/assets/fbc75d49-a466-42c9-8dd8-403a09dbac94
+
+
+speaker 2:
+
+https://github.com/user-attachments/assets/16eaf45b-7bea-4183-aa08-5e07bf9e0cad
+
+
+
 
 ## Environment setup - Do this before running any other script!
 
